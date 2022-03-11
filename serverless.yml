@@ -1,4 +1,4 @@
-service: shiftbord
+service: shiftboard
 
 frameworkVersion: '3'
 
@@ -18,8 +18,8 @@ provider:
         - dynamodb:DeleteItem
         - dynamodb:BatchWriteItem
       Resource:
-        - arn:aws:dynamodb:${self:provider.region}:*:table/shiftbord-${opt:stage}
-        - arn:aws:dynamodb:${self:provider.region}:*:table/shiftbord-${opt:stage}/index/*
+        - arn:aws:dynamodb:${self:provider.region}:*:table/shiftboard-${opt:stage}
+        - arn:aws:dynamodb:${self:provider.region}:*:table/shiftboard-${opt:stage}/index/*
 
 # you can define service wide environment variables here
 #  environment:
@@ -79,10 +79,10 @@ functions:
 
 resources:
   Resources:
-    shiftbord:
+    shiftboard:
       Type: AWS::DynamoDB::Table
       Properties:
-        TableName: shiftbord-${opt:stage}
+        TableName: shiftboard-${opt:stage}
         AttributeDefinitions:
           - AttributeName: user
             AttributeType: S

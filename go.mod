@@ -1,4 +1,4 @@
-module github.com/go/shiftbord
+module github.com/go/shiftboard
 
 go 1.17
 
