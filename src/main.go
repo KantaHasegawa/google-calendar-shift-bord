@@ -6,6 +6,7 @@ import (
 	"fmt"
 	"log"
 	"net/http"
+	"os"
 	"shiftboard/src/routers"
 
 	"github.com/aws/aws-lambda-go/events"
@@ -16,16 +17,16 @@ import (
 var gorillaMuxLambda *gorillamux.GorillaMuxAdapter
 
 func handleHello(w http.ResponseWriter, r *http.Request) {
-		type response struct {
+	type response struct {
 		Message string `json:"message"`
 	}
-		result, err := json.Marshal(response{Message: "hello"})
-		if err != nil {
-			log.Println(err.Error())
-			fmt.Fprint(w, "sorry server error...")
-			return
-		}
-		fmt.Fprintf(w, "%s", result)
+	result, err := json.Marshal(response{Message: "hello"})
+	if err != nil {
+		log.Println(err.Error())
+		fmt.Fprint(w, "sorry server error...")
+		return
+	}
+	fmt.Fprintf(w, "%s", result)
 }
 
 func init() {
@@ -40,5 +41,12 @@ func Handler(ctx context.Context, req events.APIGatewayProxyRequest) (events.API
 }
 
 func main() {
-	lambda.Start(Handler)
+	if os.Getenv("ENV") == "dev" {
+		router := routers.InitRouter()
+		router.HandleFunc("/", handleHello)
+		http.Handle("/", router)
+		http.ListenAndServe(":8080", nil)
+	} else {
+		lambda.Start(Handler)
+	}
 }
