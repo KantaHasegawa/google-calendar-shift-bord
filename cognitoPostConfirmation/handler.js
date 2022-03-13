@@ -6,7 +6,8 @@ exports.handler = async (event, context, callback) => {
   if (event.request.userAttributes.sub) {
     console.log("event.request.userAttributes.sub exists")
     const params = {
-      user: event.request.userAttributes.sub
+      User: event.request.userAttributes.sub,
+      StartWork: "user"
     }
     try {
       await documentClient.put({ TableName: process.env.TABLE_NAME, Item: params }).promise()
