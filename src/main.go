@@ -6,11 +6,11 @@ import (
 	"fmt"
 	"log"
 	"net/http"
+	"shiftboard/src/routers"
 
 	"github.com/aws/aws-lambda-go/events"
 	"github.com/aws/aws-lambda-go/lambda"
 	"github.com/awslabs/aws-lambda-go-api-proxy/gorillamux"
-	"github.com/gorilla/mux"
 )
 
 var gorillaMuxLambda *gorillamux.GorillaMuxAdapter
@@ -30,9 +30,8 @@ func handleHello(w http.ResponseWriter, r *http.Request) {
 
 func init() {
 	log.Printf("cold start")
-	router := mux.NewRouter()
+	router := routers.InitRouter()
 	router.HandleFunc("/", handleHello)
-
 	gorillaMuxLambda = gorillamux.New(router)
 }
 
