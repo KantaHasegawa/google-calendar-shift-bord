@@ -21,7 +21,7 @@ type SpotController struct {
 
 func NewSpotController(DBClient *dynamodb.Client) *SpotController {
 	return &SpotController{
-		interactor: usecase.NewSpotInteractor(&repository.SpotRepository{DBClient: DBClient}),
+		interactor: usecase.NewSpotInteractor(repository.NewSpotRepository(DBClient)),
 	}
 }
 

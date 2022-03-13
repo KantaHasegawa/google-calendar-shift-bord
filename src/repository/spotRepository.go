@@ -15,6 +15,10 @@ type SpotRepository struct {
 	DBClient *dynamodb.Client
 }
 
+func NewSpotRepository(DBClient *dynamodb.Client) *SpotRepository{
+	return &SpotRepository{DBClient}
+}
+
 func (repository *SpotRepository) Get(table string, user string, startWork string) (entity.TSpot, error) {
 	item := entity.TSpot{}
 
