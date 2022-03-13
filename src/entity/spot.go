@@ -6,7 +6,6 @@ type TSpot struct {
 		SpotId			string `json:"SpotId"`
 }
 
-// type BlogInteractor interface {
-//     ListBlog() ([]TBlog, error)
-//     DetailBlog(int) (TBlog, error)
-// }
+type SpotInteractorInteface interface {
+    DetailSpot(string, string, string, string) (TSpot, error)
+}

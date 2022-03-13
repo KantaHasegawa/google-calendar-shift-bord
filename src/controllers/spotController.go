@@ -6,22 +6,22 @@ import (
 	"net/http"
 	"os"
 
-	"shiftboard/src/repository"
+	"shiftboard/src/entity"
 	"shiftboard/src/errorHandler"
+	"shiftboard/src/repository"
+	"shiftboard/src/usecase"
 
 	"github.com/aws/aws-sdk-go-v2/service/dynamodb"
 	"github.com/gorilla/mux"
 )
 
-type SpotControllerInterface interface {}
-
 type SpotController struct {
-	repository repository.SpotRepositoryInterface
+	interactor entity.SpotInteractorInteface
 }
 
 func NewSpotController(DBClient *dynamodb.Client) *SpotController {
 	return &SpotController{
-		repository: &repository.SpotRepository{DBClient: DBClient},
+		interactor: usecase.NewSpotInteractor(&repository.SpotRepository{DBClient: DBClient}),
 	}
 }
 
@@ -32,7 +32,7 @@ func (controller *SpotController) ShowHandler(w http.ResponseWriter, r *http.Req
 	startWork := "spot"
 	table := os.Getenv("TABLE_NAME")
 
-	data, err := controller.repository.Get(table, user, startWork + "_" + spotId)
+	data, err := controller.interactor.DetailSpot(table, user, startWork, spotId)
 
 	if err != nil{
 		errorHandler.ControllerError(err, &w)
