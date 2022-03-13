@@ -2,7 +2,7 @@
 
 build: gomodgen
 	export GO111MODULE=on
-	env GOARCH=amd64 GOOS=linux go build -ldflags='-d -s -w' -a -tags netgo -installsuffix netgo -o ./bin/main ./src/*
+	env GOARCH=amd64 GOOS=linux go build -ldflags='-d -s -w' -a -tags netgo -installsuffix netgo -o ./bin/main ./src/*.go
 
 clean:
 	rm -rf ./bin ./vendor go.sum

@@ -1,4 +1,4 @@
-module github.com/go/shiftboard
+module shiftboard
 
 go 1.17
 
@@ -8,7 +8,4 @@ require (
 	github.com/gorilla/mux v1.7.4
 )
 
-require (
-	github.com/icarus-sullivan/mock-lambda v0.0.0-20220115083805-e065469e964a // indirect
-	github.com/stretchr/testify v1.7.0 // indirect
-)
+require github.com/stretchr/testify v1.7.0 // indirect
