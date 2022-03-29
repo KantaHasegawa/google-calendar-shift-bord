@@ -5,7 +5,7 @@ import (
 	"net/http"
 )
 
-func ControllerError(err error, w *http.ResponseWriter){
+func ControllerError(err error, w *http.ResponseWriter) {
 	fmt.Println(err.Error())
 	fmt.Fprint(*w, "sorry server error")
 }

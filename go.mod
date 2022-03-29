@@ -4,17 +4,17 @@ go 1.17
 
 require (
 	github.com/aws/aws-lambda-go v1.28.0
+	github.com/aws/aws-sdk-go-v2 v1.15.0
 	github.com/aws/aws-sdk-go-v2/config v1.15.0
+	github.com/aws/aws-sdk-go-v2/credentials v1.10.0
 	github.com/aws/aws-sdk-go-v2/feature/dynamodb/attributevalue v1.8.0
-	github.com/aws/aws-sdk-go-v2/feature/dynamodb/expression v1.4.1
 	github.com/aws/aws-sdk-go-v2/service/dynamodb v1.15.0
 	github.com/awslabs/aws-lambda-go-api-proxy v0.12.0
+	github.com/google/uuid v1.3.0
 	github.com/gorilla/mux v1.7.4
 )
 
 require (
-	github.com/aws/aws-sdk-go-v2 v1.15.0 // indirect
-	github.com/aws/aws-sdk-go-v2/credentials v1.10.0 // indirect
 	github.com/aws/aws-sdk-go-v2/feature/ec2/imds v1.12.0 // indirect
 	github.com/aws/aws-sdk-go-v2/internal/configsources v1.1.6 // indirect
 	github.com/aws/aws-sdk-go-v2/internal/endpoints/v2 v2.4.0 // indirect

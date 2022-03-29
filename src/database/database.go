@@ -10,9 +10,9 @@ import (
 )
 
 func NewDatabaseClient(env string) *dynamodb.Client {
-	if(env == "dev"){
+	if env == "dev" {
 		return createLocalClient()
-	}else{
+	} else {
 		return createLocalClient()
 	}
 }
