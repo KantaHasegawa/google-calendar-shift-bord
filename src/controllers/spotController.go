@@ -51,11 +51,11 @@ func (controller *SpotController) ShowHandler(w http.ResponseWriter, r *http.Req
 }
 
 func (controller *SpotController) NewHandler(w http.ResponseWriter, r *http.Request) {
-	type SpotNewHandlerRequestBody struct {
+	type SpotCreateHandlerRequestBody struct {
 		User      string `json:"User"`
 		Name      string `json:"Name"`
 		Salaly    int    `json:"Salaly"`
-		CutOffDay string `json:"EndDay"`
+		CutOffDay string `json:"CutOffDay"`
 		PayDay    string `json:"PayDay"`
 	}
 
@@ -65,7 +65,7 @@ func (controller *SpotController) NewHandler(w http.ResponseWriter, r *http.Requ
 		return
 	}
 
-	spotNewHandlerRequestBody := SpotNewHandlerRequestBody{}
+	spotNewHandlerRequestBody := SpotCreateHandlerRequestBody{}
 	err = json.Unmarshal(body, &spotNewHandlerRequestBody)
 	if err != nil {
 		errorHandler.ControllerError(err, &w)
@@ -79,7 +79,7 @@ func (controller *SpotController) NewHandler(w http.ResponseWriter, r *http.Requ
 	payDay := spotNewHandlerRequestBody.PayDay
 	table := os.Getenv("TABLE_NAME")
 
-	data, err := controller.interactor.NewSpot(table, user, name, salaly, cutOffDay, payDay)
+	data, err := controller.interactor.CreateSpot(table, user, name, salaly, cutOffDay, payDay)
 	if err != nil {
 		errorHandler.ControllerError(err, &w)
 		return

@@ -26,7 +26,7 @@ func (interactor *SpotInteractor) DetailSpot(table string, user string, startWor
 	return data, err
 }
 
-func (interactor *SpotInteractor) NewSpot(table string, user string, name string, salaly int, cutOffDay string, payDay string) (string, error) {
+func (interactor *SpotInteractor) CreateSpot(table string, user string, name string, salaly int, cutOffDay string, payDay string) (string, error) {
 	spotId := uuid.New().String()
 	data, err := interactor.repository.Post(table, user, spotId, name, salaly, cutOffDay, payDay)
 	return data, err

@@ -16,5 +16,5 @@ type TSpotData struct {
 
 type SpotInteractorInteface interface {
 	DetailSpot(string, string, string, string) (TSpot, error)
-	NewSpot(string, string, string, int, string, string) (string, error)
+	CreateSpot(string, string, string, int, string, string) (string, error)
 }
