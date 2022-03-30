@@ -20,8 +20,14 @@ func NewSpotInteractor(spotRepository SpotRepositoryInterface) *SpotInteractor {
 }
 
 type SpotRepositoryInterface interface {
+	GetAll(table string, user string)([]entity.TSpot, error)
 	Get(table string, user string, startWork string) (entity.TSpot, error)
 	Post(table string, user string, spotId string, name string, salaly int, cutOffDay string, payDay string) (string, error)
+}
+
+func (interactor *SpotInteractor) ListSpot(table string, user string)([]entity.TSpot, error){
+	data, err := interactor.repository.GetAll(table, user)
+	return data, err
 }
 
 func (interactor *SpotInteractor) DetailSpot(table string, user string, startWork string, spotId string) (entity.TSpot, error) {

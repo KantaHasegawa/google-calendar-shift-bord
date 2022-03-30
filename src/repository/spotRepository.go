@@ -6,6 +6,7 @@ import (
 
 	"shiftboard/src/entity"
 
+	"github.com/aws/aws-sdk-go-v2/aws"
 	"github.com/aws/aws-sdk-go-v2/feature/dynamodb/attributevalue"
 	"github.com/aws/aws-sdk-go-v2/service/dynamodb"
 	"github.com/aws/aws-sdk-go-v2/service/dynamodb/types"
@@ -17,6 +18,34 @@ type SpotRepository struct {
 
 func NewSpotRepository(DBClient *dynamodb.Client) *SpotRepository {
 	return &SpotRepository{DBClient}
+}
+
+func (repository *SpotRepository) GetAll(table string, user string) ([]entity.TSpot, error) {
+	item := []entity.TSpot{}
+	data, err := repository.DBClient.Query(context.TODO(), &dynamodb.QueryInput{
+		TableName:                &table,
+		KeyConditionExpression:   aws.String("#U=:userval and begins_with(StartWork, :startworkval)"),
+		ExpressionAttributeNames: map[string]string{"#U": "User"},
+		ExpressionAttributeValues: map[string]types.AttributeValue{
+			":userval":      &types.AttributeValueMemberS{Value: user},
+			":startworkval": &types.AttributeValueMemberS{Value: "spot_"},
+		},
+	})
+	if err != nil {
+		fmt.Println(err.Error())
+		return item, err
+	}
+
+	if data.Items == nil {
+		return item, err
+	}
+
+	err = attributevalue.UnmarshalListOfMaps(data.Items, &item)
+	if err != nil {
+		return item, err
+	}
+
+	return item, nil
 }
 
 func (repository *SpotRepository) Get(table string, user string, startWork string) (entity.TSpot, error) {

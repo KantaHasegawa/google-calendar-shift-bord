@@ -45,7 +45,7 @@ func main() {
 		router := routers.InitRouter()
 		router.HandleFunc("/", handleHello)
 		http.Handle("/", router)
-		http.ListenAndServe(":8080", nil)
+		http.ListenAndServe(":8070", nil)
 	} else {
 		lambda.Start(Handler)
 	}

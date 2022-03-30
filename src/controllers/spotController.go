@@ -26,6 +26,23 @@ func NewSpotController(DBClient *dynamodb.Client) *SpotController {
 	}
 }
 
+func (controller *SpotController) IndexHandler(w http.ResponseWriter, r *http.Request) {
+	vars := mux.Vars(r)
+	user := vars["user"]
+	table := os.Getenv("TABLE_NAME")
+	data, err := controller.interactor.ListSpot(table, user)
+	if err != nil {
+		errorHandler.ControllerError(err, &w)
+	}
+	result, err := json.Marshal(data)
+
+	if err != nil {
+		errorHandler.ControllerError(err, &w)
+		return
+	}
+	fmt.Fprintf(w, "%s\n", result)
+}
+
 func (controller *SpotController) ShowHandler(w http.ResponseWriter, r *http.Request) {
 	vars := mux.Vars(r)
 	user := vars["user"]

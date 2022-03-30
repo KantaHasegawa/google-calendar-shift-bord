@@ -15,6 +15,7 @@ type TSpotData struct {
 }
 
 type SpotInteractorInteface interface {
+	ListSpot(table string, user string) ([]TSpot, error)
 	DetailSpot(string, string, string, string) (TSpot, error)
 	CreateSpot(string, string, string, int, string, string) (string, error)
 }
