@@ -11,7 +11,7 @@ import (
 func InitRouter() *mux.Router {
 	DBClient := database.NewDatabaseClient(os.Getenv("ENV"))
 	router := mux.NewRouter()
-	spotController := spotController.NewSpotController(DBClient)
+	spotController := controllers.NewSpotController(DBClient)
 	router.HandleFunc("/spots/{user}", spotController.IndexHandler).Methods("GET")
 	router.HandleFunc("/spot/show/{user}/{spotid}", spotController.ShowHandler).Methods("GET")
 	router.HandleFunc("/spot/new", spotController.NewHandler).Methods("POST")

@@ -1,4 +1,4 @@
-package spotController
+package controllers
 
 import (
 	"encoding/json"
