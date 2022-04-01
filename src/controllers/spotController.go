@@ -103,3 +103,17 @@ func (controller *SpotController) NewHandler(w http.ResponseWriter, r *http.Requ
 	}
 	fmt.Fprintf(w, "%s\n", data)
 }
+
+func (controller *SpotController) DeleteHandler(w http.ResponseWriter, r *http.Request){
+	vars := mux.Vars(r)
+	user := vars["user"]
+	spotId := vars["spotid"]
+	startWork := "spot"
+	table := os.Getenv("TABLE_NAME")
+	result, err := controller.interactor.DeleteSpot(table, user, startWork, spotId)
+	if err != nil {
+		errorHandler.ControllerError(err, &w)
+		return
+	}
+	fmt.Fprint(w, result)
+}

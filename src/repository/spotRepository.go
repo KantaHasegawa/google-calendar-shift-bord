@@ -106,3 +106,17 @@ func (repository *SpotRepository) Post(table string, user string, spotId string,
 
 	return spotId, nil
 }
+
+func (repository *SpotRepository) Delete(table string, user string, startWork string, spotId string)(string, error){
+		_, err := repository.DBClient.DeleteItem(context.TODO(), &dynamodb.DeleteItemInput{
+		TableName: &table,
+		Key: map[string]types.AttributeValue{
+			"User": &types.AttributeValueMemberS{Value: user},
+			"StartWork": &types.AttributeValueMemberS{Value: startWork + "_" + spotId},
+		},
+	})
+	if err != nil {
+		return "", fmt.Errorf("DeleteItem: %v", err)
+	}
+	return spotId, nil
+}

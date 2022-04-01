@@ -23,6 +23,7 @@ type SpotRepositoryInterface interface {
 	GetAll(table string, user string)([]entity.TSpot, error)
 	Get(table string, user string, startWork string) (entity.TSpot, error)
 	Post(table string, user string, spotId string, name string, salaly int, cutOffDay string, payDay string) (string, error)
+	Delete(table string, user string, startWork string, spotId string)(string, error)
 }
 
 func (interactor *SpotInteractor) ListSpot(table string, user string)([]entity.TSpot, error){
@@ -57,6 +58,11 @@ func (interactor *SpotInteractor) CreateSpot(table string, user string, name str
 	spotId := uuid.New().String()
 	data, err := interactor.repository.Post(table, user, spotId, name, salaly, cutOffDay, payDay)
 	return data, err
+}
+
+func (interactor *SpotInteractor) DeleteSpot(table string, user string, startWork string, spotId string)(string, error){
+	result, err := interactor.repository.Delete(table, user, startWork, spotId)
+	return result, err
 }
 
 func cutOffDayValidate(cutOffDay string) error {
