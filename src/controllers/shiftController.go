@@ -82,3 +82,16 @@ func (controller *ShiftController) NewHandler(w http.ResponseWriter, r *http.Req
 
 	fmt.Fprint(w, "Create Success")
 }
+
+func (controller *ShiftController) DeleteHandler(w http.ResponseWriter, r *http.Request){
+	vars := mux.Vars(r)
+	user := vars["user"]
+	startWork := vars["startwork"]
+	table := os.Getenv("TABLE_NAME")
+	err := controller.interactor.DeleteShift(table, user, startWork)
+	if err != nil {
+		errorHandler.ControllerError(err, &w)
+		return
+	}
+	fmt.Fprint(w, "Delete Success")
+}

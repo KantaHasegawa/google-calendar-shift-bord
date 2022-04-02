@@ -19,5 +19,6 @@ func InitRouter() *mux.Router {
 	router.HandleFunc("/spot/delete/{user}/{spotid}", spotController.DeleteHandler).Methods("DELETE")
 	router.HandleFunc("/shift/{user}/{year}/{month}", shiftController.IndexHandler).Methods("GET")
 	router.HandleFunc("/shift/new", shiftController.NewHandler).Methods("POST")
+	router.HandleFunc("/shift/{user}/{startwork}", shiftController.DeleteHandler).Methods("DELETE")
 	return router
 }

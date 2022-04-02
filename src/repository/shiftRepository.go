@@ -74,3 +74,17 @@ func (repository *ShiftRepository) Post(table string, user string, startWork str
 
 	return nil
 }
+
+func (repository *ShiftRepository) Delete(table string, user string, startWork string)(error){
+		_, err := repository.DBClient.DeleteItem(context.TODO(), &dynamodb.DeleteItemInput{
+		TableName: &table,
+		Key: map[string]types.AttributeValue{
+			"User": &types.AttributeValueMemberS{Value: user},
+			"StartWork": &types.AttributeValueMemberS{Value: startWork},
+		},
+	})
+	if err != nil {
+		return fmt.Errorf("DeleteItem: %v", err)
+	}
+	return nil
+}
