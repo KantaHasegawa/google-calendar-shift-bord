@@ -8,5 +8,6 @@ type TShift struct {
 }
 
 type ShiftInteractorInteface interface{
+	IndexShift(table string, user string, year string, month string)([]TShift, error)
 	CreateShift(table string, user string, startWork string, finishWork string, spotId string)(error)
 }

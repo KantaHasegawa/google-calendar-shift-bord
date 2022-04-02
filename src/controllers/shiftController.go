@@ -12,6 +12,7 @@ import (
 	"shiftboard/src/usecase"
 
 	"github.com/aws/aws-sdk-go-v2/service/dynamodb"
+	"github.com/gorilla/mux"
 )
 
 type ShiftController struct {
@@ -24,12 +25,34 @@ func NewShiftController(DBClient *dynamodb.Client) *ShiftController {
 	}
 }
 
-func (controller *ShiftController) NewHandler(w http.ResponseWriter, r *http.Request){
+func (controller *ShiftController) IndexHandler(w http.ResponseWriter, r *http.Request) {
+	vars := mux.Vars(r)
+	user := vars["user"]
+	year := vars["year"]
+	month := vars["month"]
+	table := os.Getenv("TABLE_NAME")
+
+	data, err := controller.interactor.IndexShift(table, user, year, month)
+	if err != nil {
+		errorHandler.ControllerError(err, &w)
+		return
+	}
+
+	result, err := json.Marshal(data)
+	if err != nil {
+		errorHandler.ControllerError(err, &w)
+		return
+	}
+
+	fmt.Fprintf(w, "%s", result)
+}
+
+func (controller *ShiftController) NewHandler(w http.ResponseWriter, r *http.Request) {
 	type ShiftNewHandlerRequestBody struct {
-		User string `json:"User"`
-		StartWork string `json:"StartWork"`
+		User       string `json:"User"`
+		StartWork  string `json:"StartWork"`
 		FinishWork string `json:"FinishWork"`
-		SpotId string `json:"SpotId"`
+		SpotId     string `json:"SpotId"`
 	}
 
 	body, err := io.ReadAll(r.Body)
